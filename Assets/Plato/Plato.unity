@@ -202,7 +202,7 @@ MonoBehaviour:
   _positionFrequency: 0.1
   _rotationFrequency: 0.1
   _positionAmplitude: 0.1
-  _rotationAmplitude: 90
+  _rotationAmplitude: 45
   _positionScale: {x: 1, y: 1, z: 1}
   _rotationScale: {x: 1, y: 1, z: 1}
   _positionFractalLevel: 2
@@ -573,7 +573,11 @@ Prefab:
     - target: {fileID: 2300000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 65c5cc9424498654ebc5b141a714683b, type: 2}
+      objectReference: {fileID: 2100000, guid: 7fb2c68acbb3ab246949aab4ad7ef9e3, type: 2}
+    - target: {fileID: 3300000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: a07c186fac5260a419c6a2078c375841, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
   m_IsPrefabParent: 0
