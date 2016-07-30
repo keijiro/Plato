@@ -1,5 +1,5 @@
 #include "UnityCG.cginc"
-#include "SimplexNoise3D.cginc"
+#include "SimplexNoise2D.cginc"
 
 half3 _AlbedoColor;
 
@@ -28,17 +28,21 @@ float UVRandom(float2 uv)
 
 float3 ApplyModifier(float3 v)
 {
-    float3 np = v * 3;
-    np += _Time.y * 0.5;
-    //np = floor(np * 5) / 5;
+    float phi = atan2(v.z, v.x);
 
-    float disp = snoise(np);
-    float scale = 1 + 0.8 * disp;
+    float2 np = float2(phi, v.y * 4) + _Time.y * 0.7;
+
+    np.y = round(np.y * 3) / 3 - _Time.y * 0.3;
+    np.x += np.y * 8 + _Time.y * 1.8;
+
+    float disp = snoise(np.yy);
+    float scale = 1 + 0.2 * disp;
 
     float3 center = float3(0, 0.46, 0);
     center.y = v.y;
 
-    return (v - center) * scale + center;
+    //return (v - center) * scale + center;
+    return v + float3(disp * 0.14, 0, 0);
 }
 
 void ModifyVertex(inout appdata_full v, out Input o)
@@ -57,12 +61,13 @@ void ModifyVertex(inout appdata_full v, out Input o)
     v.normal *= -1;
 #endif
 
-    o.cutParam = dot(v.vertex, normalize(float3(0.1, 1, 0.1))) * 8 + _Time.y * 2;
+    //o.cutParam = dot(v.vertex, normalize(float3(0.1, 1, 0.1))) * 8 + _Time.y * 2;
+    o.cutParam = (v.vertex.y * 4 + _Time.y* 0.7) * 3 - 0.4;
 }
 
 void Surface(Input IN, inout SurfaceOutputStandard o)
 {
-    clip(frac(IN.cutParam) - 0.4);
+    clip(frac(IN.cutParam) - 0.5);
 
 #ifndef MATERIAL_BACK
 
@@ -83,7 +88,7 @@ void Surface(Input IN, inout SurfaceOutputStandard o)
 
 #else
 
-    o.Albedo = float3(1, 0, 0);
+    o.Albedo = float3(0.8, 0.1, 0.1);
     o.Normal = float3(0, 0, -1);
 
 #endif
