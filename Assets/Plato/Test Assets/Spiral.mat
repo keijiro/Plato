@@ -116,6 +116,15 @@ Material:
         name: _Mode
       second: 0
     - first:
+        name: _NoiseAmp
+      second: 0.6
+    - first:
+        name: _NoiseFreq
+      second: 1
+    - first:
+        name: _NoiseSpeed
+      second: 1.2
+    - first:
         name: _NormalMapScale
       second: 1
     - first:
@@ -124,6 +133,9 @@ Material:
     - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _RandomSeed
+      second: 0
     - first:
         name: _Smoothness
       second: 0.5
@@ -134,17 +146,50 @@ Material:
         name: _SpecularHighlights
       second: 1
     - first:
+        name: _SpikeAmp
+      second: 1
+    - first:
+        name: _SpikeProb
+      second: 0.005
+    - first:
+        name: _SpiralFreq
+      second: 30
+    - first:
+        name: _SpiralGrad
+      second: 3
+    - first:
         name: _SpiralHoge
       second: 0
     - first:
         name: _SpiralMoge
       second: 0
     - first:
+        name: _SpiralParam1
+      second: 0
+    - first:
+        name: _SpiralParam2
+      second: 0
+    - first:
+        name: _SpiralSlope
+      second: 3
+    - first:
+        name: _SpiralSpeed
+      second: 3
+    - first:
         name: _SrcBlend
       second: 1
     - first:
         name: _UVSec
       second: 0
+    - first:
+        name: _WaveAmp
+      second: 0.35
+    - first:
+        name: _WaveFreq
+      second: 2
+    - first:
+        name: _WaveSpeed
+      second: 8
     - first:
         name: _ZWrite
       second: 1

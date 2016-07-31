@@ -20,25 +20,49 @@ half3 _BackColor;
 half _BackMetallic;
 half _BackSmoothness;
 
+float _NoiseAmp;
+float _NoiseSpeed;
+float _NoiseFreq;
+
+float _SpikeProb;
+float _SpikeAmp;
+
+float _SpiralFreq;
+float _SpiralSlope;
+float _SpiralSpeed;
+
+float _Cutoff;
+float _WaveFreq;
+float _WaveAmp;
+float _WaveSpeed;
+
+float _RandomSeed;
+
 struct Input
 {
     float2 uv_AlbedoMap;
     float3 rawPosition;
 };
 
-float UVRandom(float2 uv)
+float Random01(float3 v, float t)
 {
+    float2 uv = v.xy + float2(v.z * -2.1, t + _RandomSeed);
     return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
 }
 
 float3 ApplyModifier(float3 v)
 {
+    float time = _Time.y;
     float phi = atan2(v.z, v.x) / UNITY_PI;
-    float2 np = float2(phi, v.y * 6 + phi * 2) + _Time.y * 1.2;
+
+    float2 np = float2(phi, v.y * 6 + phi * 2) * _NoiseFreq;
+    np += _NoiseSpeed * time;
 
     float n = snoise(np);
-    n *= 1 + (UVRandom(v.xy + v.yz + floor(_Time.y)) > 0.995);
-    v.xz *= 1 + n * n * n * 0.6;
+    float sp = Random01(v, floor(time));
+
+    n *= 1 + (sp < _SpikeProb) * _SpikeAmp;
+    v.xz *= 1 + n * n * n * _NoiseAmp;
 
     return v;
 }
@@ -47,9 +71,11 @@ void Cutout(float3 v)
 {
     float time = _Time.y;
     float phi = atan2(v.x, v.z) / UNITY_PI;
-    float wave = sin((v.y * 4 + phi * 2) * UNITY_PI - time * 8);
-    float p = frac(v.y * 30 + phi * 3 + time * 3);
-    clip(p + 0.35 * wave - 0.5);
+
+    float w = sin((v.y * 2 + phi) * _WaveFreq * UNITY_PI - time * _WaveSpeed);
+    float p = v.y * _SpiralFreq + phi * _SpiralSlope + time * _SpiralSpeed;
+
+    clip(frac(p) + w * _WaveAmp - _Cutoff);
 }
 
 void ModifyVertex(inout appdata_full v, out Input o)

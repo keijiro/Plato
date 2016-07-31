@@ -12,16 +12,31 @@
 		_DetailNormalMap("", 2D) = "bump"{}
 		_DetailNormalMapScale("", Range(0, 2)) = 1
 		_OcclusionMap("", 2D) = "white"{}
-		_OcclusionStrength("", Range(0,1)) = 1
+		_OcclusionStrength("", Range(0, 1)) = 1
 
         [Header(Back Face Attributes)]
-        _BackColor("Color", Color) = (1,1,1)
-		[Gamma] _BackMetallic("Metallic", Range(0,1)) = 0
-		_BackSmoothness("Smoothness", Range(0,1)) = 0
+        _BackColor("Color", Color) = (1, 1, 1)
+		[Gamma] _BackMetallic("Metallic", Range(0, 1)) = 0
+		_BackSmoothness("Smoothness", Range(0, 1)) = 0
 
         [Header(Spiral Parameters)]
-        _SpiralParam1("Param1", Range(0, 1)) = 0
-        _SpiralParam2("Param2", Float) = 0
+        _NoiseAmp("Noise Amplitude", Float) = 0.6
+        _NoiseSpeed("Noise Speed", Float) = 1.2
+        _NoiseFreq("Noise Frequency", Float) = 1
+        [Space]
+        _SpikeProb("Spike Probability", Float) = 0.005
+        _SpikeAmp("Spike Amplitude", Float) = 1
+        [Space]
+        _SpiralFreq("Spiral Frequency", Float) = 30
+        _SpiralSlope("Spiral Slope", Float) = 3
+        _SpiralSpeed("Spiral Speed", Float) = 3
+        [Space]
+        _Cutoff("Cutoff", Range(0, 1)) = 0.5
+        _WaveFreq("Wave Frequency", Float) = 2
+        _WaveAmp("Wave Amplitude", Range(0, 1)) = 0.35
+        _WaveSpeed("Wave Speed", Float) = 8
+        [Space]
+        _RandomSeed("Random Seed", Float) = 0
     }
 
     SubShader
