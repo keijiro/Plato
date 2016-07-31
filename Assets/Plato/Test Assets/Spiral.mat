@@ -87,7 +87,7 @@ Material:
       second: 0
     - first:
         name: _BackSmoothness
-      second: 0.552
+      second: 0.3
     - first:
         name: _BumpScale
       second: 1
@@ -120,19 +120,25 @@ Material:
       second: 1
     - first:
         name: _OcclusionStrength
-      second: 0.88
+      second: 0.9
     - first:
         name: _Parallax
       second: 0.02
     - first:
         name: _Smoothness
-      second: 0.564
+      second: 0.5
     - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
         name: _SpecularHighlights
       second: 1
+    - first:
+        name: _SpiralHoge
+      second: 0
+    - first:
+        name: _SpiralMoge
+      second: 0
     - first:
         name: _SrcBlend
       second: 1
