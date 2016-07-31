@@ -20,23 +20,17 @@ half3 _BackColor;
 half _BackMetallic;
 half _BackSmoothness;
 
-float _NoiseAmp;
-float _NoiseSpeed;
-float _NoiseFreq;
-
-float _SpikeProb;
-float _SpikeAmp;
-
-float _HelixFreq;
-float _HelixSlope;
-float _HelixSpeed;
-
 float _Cutoff;
-float _WaveFreq;
-float _WaveAmp;
-float _WaveSpeed;
+float _Width;
+float _Scroll;
 
-float _RandomSeed;
+float _RotationAmp;
+float _RotationFreq;
+float _RotationSpeed;
+
+float _ScaleAmp;
+float _ScaleFreq;
+float _ScaleSpeed;
 
 struct Input
 {
@@ -44,38 +38,43 @@ struct Input
     float3 rawPosition;
 };
 
-float Random01(float3 v, float t)
+float PosToParam(float3 v)
 {
-    float2 uv = v.xy + float2(v.z * -2.1, t + _RandomSeed);
-    return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
+    return v.y / _Width + _Time.y * _Scroll;
+}
+
+float3 Rotate(float3 v, float r)
+{
+    float s, c;
+    sincos(r, s, c);
+
+    return float3(
+        dot(float2(c, -s), v.xz),
+        v.y,
+        dot(float2(s, c), v.xz)
+    );
 }
 
 float3 ApplyModifier(float3 v)
 {
     float time = _Time.y;
-    float phi = atan2(v.z, v.x) / UNITY_PI;
+    float slice = floor(PosToParam(v));
 
-    float2 np = float2(phi, v.y * 6 + phi * 2) * _NoiseFreq;
-    np += _NoiseSpeed * time;
+    float np_r = slice * _RotationFreq + _RotationSpeed * time;
+    float np_s = slice * _ScaleFreq    + _ScaleSpeed    * time;
 
-    float n = snoise(np);
-    float sp = Random01(v, floor(time));
+    float n_r = snoise(float2(np_r, 0.5));
+    float n_s = snoise(float2(np_s, 0.2));
 
-    n *= 1 + (sp < _SpikeProb) * _SpikeAmp;
-    v.xz *= 1 + n * n * n * _NoiseAmp;
+    v = Rotate(v, n_r * _RotationAmp);
+    v.xz *= 1 + n_s * _ScaleAmp;
 
     return v;
 }
 
 void Cutout(float3 v)
 {
-    float time = _Time.y;
-    float phi = atan2(v.x, v.z) / UNITY_PI;
-
-    float w = sin((v.y * 2 + phi) * _WaveFreq * UNITY_PI - time * _WaveSpeed);
-    float p = v.y * _HelixFreq + phi * _HelixSlope + time * _HelixSpeed;
-
-    clip(frac(p) + w * _WaveAmp - _Cutoff);
+    clip(frac(PosToParam(v) + _Cutoff / 2) - _Cutoff);
 }
 
 void ModifyVertex(inout appdata_full v, out Input o)
@@ -90,7 +89,7 @@ void ModifyVertex(inout appdata_full v, out Input o)
     float3 n = normalize(cross(v2 - v1, v3 - v1));
 
     v.vertex.xyz = v1;
-    v.normal = normalize((v.normal + n) * 0.5);
+    v.normal = normalize(lerp(v.normal, n, saturate(_RotationAmp)));
 
 #ifdef BACKFACE
     v.normal *= -1;
