@@ -27,9 +27,9 @@ float _NoiseFreq;
 float _SpikeProb;
 float _SpikeAmp;
 
-float _SpiralFreq;
-float _SpiralSlope;
-float _SpiralSpeed;
+float _HelixFreq;
+float _HelixSlope;
+float _HelixSpeed;
 
 float _Cutoff;
 float _WaveFreq;
@@ -73,7 +73,7 @@ void Cutout(float3 v)
     float phi = atan2(v.x, v.z) / UNITY_PI;
 
     float w = sin((v.y * 2 + phi) * _WaveFreq * UNITY_PI - time * _WaveSpeed);
-    float p = v.y * _SpiralFreq + phi * _SpiralSlope + time * _SpiralSpeed;
+    float p = v.y * _HelixFreq + phi * _HelixSlope + time * _HelixSpeed;
 
     clip(frac(p) + w * _WaveAmp - _Cutoff);
 }

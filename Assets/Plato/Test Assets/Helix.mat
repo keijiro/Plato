@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Spiral
+  m_Name: Helix
   m_Shader: {fileID: 4800000, guid: cbd9449a602b6124ba3cc724d0074c3f, type: 3}
   m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _NORMALMAP
   m_LightmapFlags: 1
@@ -109,6 +109,15 @@ Material:
     - first:
         name: _GlossyReflections
       second: 1
+    - first:
+        name: _HelixFreq
+      second: 30
+    - first:
+        name: _HelixSlope
+      second: 3
+    - first:
+        name: _HelixSpeed
+      second: 3
     - first:
         name: _Metallic
       second: 0

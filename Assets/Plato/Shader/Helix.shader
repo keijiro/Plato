@@ -1,4 +1,4 @@
-﻿Shader "Plato/Spiral"
+﻿Shader "Plato/Helix"
 {
     Properties
     {
@@ -19,7 +19,7 @@
 		[Gamma] _BackMetallic("Metallic", Range(0, 1)) = 0
 		_BackSmoothness("Smoothness", Range(0, 1)) = 0
 
-        [Header(Spiral Parameters)]
+        [Header(Helix Parameters)]
         _NoiseAmp("Noise Amplitude", Float) = 0.6
         _NoiseSpeed("Noise Speed", Float) = 1.2
         _NoiseFreq("Noise Frequency", Float) = 1
@@ -27,9 +27,9 @@
         _SpikeProb("Spike Probability", Float) = 0.005
         _SpikeAmp("Spike Amplitude", Float) = 1
         [Space]
-        _SpiralFreq("Spiral Frequency", Float) = 30
-        _SpiralSlope("Spiral Slope", Float) = 3
-        _SpiralSpeed("Spiral Speed", Float) = 3
+        _HelixFreq("Helix Frequency", Float) = 30
+        _HelixSlope("Helix Slope", Float) = 3
+        _HelixSpeed("Helix Speed", Float) = 3
         [Space]
         _Cutoff("Cutoff", Range(0, 1)) = 0.5
         _WaveFreq("Wave Frequency", Float) = 2
@@ -48,7 +48,7 @@
         CGPROGRAM
         #pragma surface Surface Standard vertex:ModifyVertex addshadow
         #pragma target 3.0
-        #include "Spiral.cginc"
+        #include "Helix.cginc"
         ENDCG
 
         Cull front
@@ -57,7 +57,7 @@
         #pragma surface Surface Standard vertex:ModifyVertex addshadow
         #pragma target 3.0
         #define BACKFACE
-        #include "Spiral.cginc"
+        #include "Helix.cginc"
         ENDCG
     }
     CustomEditor "Plato.PlatoMaterialEditor"
