@@ -5,6 +5,8 @@ namespace Plato
 {
     public class PlatoMaterialEditor : ShaderGUI
     {
+        #region Inspector GUI
+
         static GUIContent _textAlbedoMap = new GUIContent("Albedo Map");
         static GUIContent _textNormalMap = new GUIContent("Normal Map");
         static GUIContent _textDetailNormal = new GUIContent("Detail Normal");
@@ -68,5 +70,34 @@ namespace Plato
                 editor.ShaderProperty(p, p.displayName);
             }
         }
+
+        #endregion
+
+        #region Preview GUI
+
+        PlatoPreviewRenderer _preview;
+
+        public override void OnMaterialPreviewGUI(
+            MaterialEditor editor, Rect rect, GUIStyle bg
+        )
+        {
+            if (_preview == null) _preview = new PlatoPreviewRenderer();
+            _preview.Render((Material)editor.target, rect, bg);
+        }
+
+        public override void OnMaterialInteractivePreviewGUI(
+            MaterialEditor editor, Rect rect, GUIStyle bg
+        )
+        {
+            if (_preview == null) _preview = new PlatoPreviewRenderer();
+            _preview.Render((Material)editor.target, rect, bg);
+        }
+
+        public override void OnMaterialPreviewSettingsGUI(MaterialEditor materialEditor)
+        {
+            // Do nothing to hide the standard tool bar.
+        }
+
+        #endregion
     }
 }
